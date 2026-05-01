@@ -6,7 +6,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-const API_KEY = "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"; // 🔴 paste here
+const API_KEY = process.env.OPENROUTER_API_KEY; // 🔴 paste here
 
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
