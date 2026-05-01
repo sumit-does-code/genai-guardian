@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GenAI Guardian  – Ethical AI</title>
+
+  <!-- Google Fonts: Outfit for headings, DM Sans for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+
+    /* ============================
+       GLOBAL STYLES
+    ============================ */
+    body {
+        overflow-x: hidden;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --green: #00e5a0;
+      --green-dark: #00b87a;
+      --navy: #0b0f1a;
+      --navy2: #111827;
+      --navy3: #1c2435;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--navy);
+      color: var(--text);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+
+    /* ============================
+       NAVBAR
+    ============================ */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background: rgba(11, 15, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Shield icon made with CSS */
+    .shield-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--green);
+      border-radius: 8px 8px 14px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    .nav-btn {
+      background: var(--green);
+      color: #000;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 9px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-left: 24px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .nav-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+    }
+
+
+    /* ============================
+       HERO / HOME SECTION
+    ============================ */
+
+    #home {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glowing circles in the background */
+    #home::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    #home::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0,229,160,0.05) 0%, transparent 70%);
+      top: 20%;
+      right: 10%;
+      pointer-events: none;
+    }
+
+    /* Floating animated dots grid */
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    /* Small label above title */
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid rgba(0,229,160,0.25);
+      color: var(--green);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-title span {
+      color: var(--green);
+    }
+
+    .hero-desc {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-main {
+      background: var(--green);
+      color: #000;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(0,229,160,0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 30px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* Stats row below hero buttons */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .stat-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--green);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+
+    /* ============================
+       FEATURES SECTION
+    ============================ */
+
+    #features {
+      padding: 100px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 50px;
+      max-width: 480px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: border-color 0.25s, transform 0.25s;
+      cursor: default;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(0,229,160,0.3);
+      transform: translateY(-4px);
+    }
+
+    .f-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid rgba(0,229,160,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .f-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(0,229,160,0.08);
+      padding: 3px 10px;
+      border-radius: 100px;
+      border: 1px solid rgba(0,229,160,0.15);
+    }
+
+
+    /* ============================
+       CHAT SECTION
+    ============================ */
+
+    #chat {
+      padding: 100px 20px;
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chat-section-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .chat-section-inner .section-sub {
+      margin: 0 auto 36px;
+    }
+
+    /* Score badge */
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid rgba(0,229,160,0.2);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
+
+    /* The chat window */
+    .chat-window {
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    /* Top bar of chat window */
+    .chat-top-bar {
+      background: var(--navy3);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Traffic light dots */
+    .dot-red   { width:11px; height:11px; border-radius:50%; background:#ff5f57; }
+    .dot-yellow{ width:11px; height:11px; border-radius:50%; background:#febc2e; }
+    .dot-green { width:11px; height:11px; border-radius:50%; background:#28c840; }
+
+    .chat-bot-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      margin-left: 8px;
+      color: var(--text);
+    }
+
+    .online-badge {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Message area */
+    .chat-messages {
+      height: 340px;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scrollbar-width: thin;
+      scrollbar-color: #333 transparent;
+    }
+
+    /* AI bubble — left */
+    .msg-ai {
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 14px 14px 14px 4px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text);
+      max-width: 78%;
+      align-self: flex-start;
+      line-height: 1.6;
+      animation: msgPop 0.25s ease;
+    }
+
+    /* User bubble — right */
+    .msg-user {
+      background: var(--green);
+      border-radius: 14px 14px 4px 14px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #000;
+      font-weight: 500;
+      max-width: 78%;
+      align-self: flex-end;
+      line-height: 1.6;
+      animation: msgPop 0.25s ease;
+    }
+
+    /* Warning bubble */
+    .msg-warn {
+      background: rgba(255, 170, 0, 0.08);
+      border: 1px solid rgba(255, 170, 0, 0.3);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #f6a623;
+      max-width: 85%;
+      align-self: flex-start;
+      line-height: 1.6;
+      animation: msgPop 0.25s ease;
+    }
+
+    /* Typing dots */
+    .typing {
+        align-self: flex-start;
+        background: var(--navy3);
+        border: 1px solid var(--border);
+        border-radius: 14px 14px 14px 4px;
+        padding: 12px 16px;
+        max-width: 70%;
+      }
+
+      /* Wrapper */
+      .typing-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      /* Text */
+      .typing-text {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* Dots */
+      .typing-dots {
+        display: flex;
+        gap: 5px;
+      }
+
+      .typing-dots span {
+        width: 6px;
+        height: 6px;
+        background: var(--muted);
+        border-radius: 50%;
+        animation: bounce 1.2s infinite;
+      }
+
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    .typing span:nth-child(2) { animation-delay: 0.18s; }
+    .typing span:nth-child(3) { animation-delay: 0.36s; }
+
+    /* Input row */
+    .chat-input-row {
+      display: flex;
+      gap: 10px;
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      background: var(--navy3);
+    }
+
+    .chat-input-row input {
+      flex: 1;
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 11px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .chat-input-row input::placeholder { color: var(--muted); }
+
+    .chat-input-row input:focus {
+      border-color: rgba(0,229,160,0.4);
+    }
+
+    .send-btn {
+      background: var(--green);
+      color: #000;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 11px 22px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .send-btn:hover {
+      background: var(--green-dark);
+      transform: scale(1.04);
+    }
+
+    /* Suggested prompts */
+    .suggest-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .chip {
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .chip:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+
+    /* ============================
+       ABOUT SECTION
+    ============================ */
+
+    #about {
+      padding: 100px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .about-text { flex: 1; min-width: 280px; }
+
+    .about-text .section-sub { max-width: 100%; }
+
+    .principles {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .principle {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+
+    .p-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--green);
+      opacity: 0.4;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 24px;
+    }
+
+    .principle h5 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .principle p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Pipeline card on the right */
+    .about-pipeline {
+      flex: 1;
+      min-width: 280px;
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px;
+    }
+
+    .about-pipeline h4 {
+      font-size: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .pipe-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding-bottom: 20px;
+      position: relative;
+    }
+
+    /* Vertical line connecting steps */
+    .pipe-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 40px;
+      width: 2px;
+      height: calc(100% - 18px);
+      background: var(--border);
+    }
+
+    .p-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid rgba(0,229,160,0.2);
+    }
+
+    .pipe-step h5 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .pipe-step p  { font-size: 12px; color: var(--muted); }
+
+
+    /* ============================
+       FOOTER
+    ============================ */
+
+    footer {
+      background: var(--navy);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+      color: #334;
+      color: var(--muted);
+    }
+
+    footer span { color: var(--green); }
+
+
+    /* ============================
+       ANIMATIONS
+    ============================ */
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    @keyframes msgPop {
+      from { opacity: 0; transform: translateY(6px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes typeBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%           { transform: translateY(-5px); }
+    }
+
+
+    /* ============================
+       RESPONSIVE (mobile)
+    ============================ */
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      @media (max-width: 640px) {
+  .nav-links {
+    display: none; /* keep for now OR later make hamburger */
+  }
+
+  nav {
+    justify-content: space-between;
+  }
+}
+      #features, #about { padding: 70px 20px; }
+      #about { flex-direction: column; gap: 30px; }
+      .hero-stats { gap: 24px; }
+    }
+    /* AUTH MODAL */
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.auth-box {
+  background: var(--navy2);
+  padding: 30px;
+  border-radius: 16px;
+  width: 300px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.auth-box h2 {
+  margin-bottom: 20px;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--navy);
+  color: var(--text);
+}
+
+.auth-box button {
+  margin-top: 12px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: var(--green);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#toggleText span {
+  color: var(--green);
+  cursor: pointer;
+}
+
+.close-btn {
+  margin-top: 10px;
+  background: transparent !important;
+  color: var(--muted);
+}
+.chat-window {
+  width: 100%;
+  max-width: 680px;
+}
+
+@media (max-width: 480px) {
+  .chat-messages {
+    height: 260px;
+  }
+
+  .chat-input-row input {
+    font-size: 13px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+}
+.loader {
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top: 2px solid var(--green);
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+/* Better typing layout */
+.typing-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.typing-text {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Dots row */
+.typing-dots {
+  display: flex;
+  gap: 5px;
+}
+
+/* Animate dots */
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  background: var(--muted);
+  border-radius: 50%;
+  animation: bounce 1.2s infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav>
+    <div class="nav-logo">
+      <div class="shield-icon">🛡</div>
+      GenAI Guardian
+    </div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#chat">Chat</a>
+      <a href="#about">About</a>
+    </div>
+    <div id="authSection">
+  <button class="nav-btn" onclick="openAuth()">Login / Signup</button>
+</div>
+  </nav>
+
+
+  <!-- ========== HOME / HERO ========== -->
+  <section id="home">
+    <div class="hero-dots"></div>
+
+    <div class="hero-content">
+
+      <div class="hero-tag">
+        <div class="live-dot"></div>
+        Ethical AI System · Active
+      </div>
+
+      <h1 class="hero-title">
+        Ethical AI for a<br>
+        <span>Safer Digital</span> Future
+      </h1>
+
+      <p class="hero-desc">
+        GenAI Guardian filters harmful inputs and responds responsibly —
+        keeping every conversation safe, fair, and trustworthy.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn-main" onclick="document.getElementById('chat').scrollIntoView({behavior:'smooth'})">
+          Open Chat Interface
+        </button>
+        <button class="btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+          See Features
+        </button>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val">8/10</div>
+          <div class="stat-label">Safety Score</div>
+        </div>
+        <div>
+          <div class="stat-val">11+</div>
+          <div class="stat-label">Filters Active</div>
+        </div>
+        <div>
+          <div class="stat-val">100%</div>
+          <div class="stat-label">Client-Side</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========== FEATURES ========== -->
+  <section id="features">
+    <p class="section-label">What We Built</p>
+    <h2 class="section-title">Core Features</h2>
+    <p class="section-sub">Every part of the app is designed to make AI interaction safe and responsible.</p>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="f-icon">🔍</div>
+        <h3>Ethical Filtering System</h3>
+        <p>Real-time keyword detection blocks harmful messages before they are processed.</p>
+        <span class="f-tag">Active Protection</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="f-icon">🤖</div>
+        <h3>Safe AI Responses</h3>
+        <p>Pre-written, responsible replies cover common topics with helpful and ethical answers.</p>
+        <span class="f-tag">Curated Replies</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="f-icon">💬</div>
+        <h3>Chat Interface</h3>
+        <p>A polished chatbot UI with distinct styles for user and AI messages, plus typing animation.</p>
+        <span class="f-tag">Interactive</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========== CHAT ========== -->
+  <section id="chat">
+    <div class="chat-section-inner">
+
+      <p class="section-label">Interactive Demo</p>
+      <h2 class="section-title">Chat with the Guardian</h2>
+      <p class="section-sub">
+        Try a normal question — or test the filter by typing words like <strong style="color:#f6a623;">"hack"</strong> or <strong style="color:#f6a623;">"weapon"</strong>.
+      </p>
+
+      <div class="score-pill">
+        🛡️ Safety Score: <strong>8 / 10</strong>
+      </div>
+
+      <!-- Chat window -->
+      <div class="chat-window">
+
+        <!-- Top bar with dots -->
+        <div class="chat-top-bar">
+          <div class="dot-red"></div>
+          <div class="dot-yellow"></div>
+          <div class="dot-green"></div>
+          <span class="chat-bot-name">GenAI Guardian</span>
+          <div class="online-badge">
+            <div class="live-dot"></div> Online
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-messages" id="chatMessages">
+          <div class="msg-ai">
+            👋 Hello! I'm GenAI Guardian. Ask me anything — I will respond safely and responsibly!
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="chat-input-row">
+          <input type="text" id="userInput" placeholder="Type a message..." />
+          <button class="send-btn" onclick="sendMessage()">
+            Send ➤
+          </button>
+        </div>
+
+      </div><!-- end chat-window -->
+
+      <!-- Quick-try chips -->
+      <div class="suggest-chips">
+        <button class="chip" onclick="tryPrompt('What is generative AI?')">What is generative AI?</button>
+        <button class="chip" onclick="tryPrompt('How does ethical AI work?')">Ethical AI?</button>
+        <button class="chip" onclick="tryPrompt('I want to hack a system')">⚠ Test filter</button>
+        <button class="chip" onclick="tryPrompt('Tell me about data privacy')">Data privacy</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about">
+
+    <div class="about-text">
+      <p class="section-label">Our Mission</p>
+      <h2 class="section-title">Why Ethics in AI Matters</h2>
+      <p class="section-sub">
+        As AI becomes part of everyday life, the rules we build into it today shape tomorrow's world.
+        GenAI Guardian shows that safety and helpfulness can go hand in hand.
+      </p>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="p-num">01</div>
+          <div>
+            <h5>Transparency First</h5>
+            <p>Users should always know why a request was blocked and what the system is doing.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">02</div>
+          <div>
+            <h5>Harm Prevention</h5>
+            <p>Stop harmful content before it reaches processing — don't just react after the damage is done.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">03</div>
+          <div>
+            <h5>Helpful by Design</h5>
+            <p>Ethical limits should make AI more trustworthy and useful, not less helpful.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-pipeline">
+      <h4>How It Works</h4>
+
+      <div class="pipe-step">
+        <div class="p-icon">📝</div>
+        <div>
+          <h5>User sends a message</h5>
+          <p>Input is captured from the chat interface.</p>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="p-icon">🔍</div>
+        <div>
+          <h5>Filter scans the text</h5>
+          <p>11+ harmful keywords are checked instantly.</p>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="p-icon">⚖️</div>
+        <div>
+          <h5>Safe or Harmful?</h5>
+          <p>Message is classified in real time.</p>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="p-icon">✅</div>
+        <div>
+          <h5>Response delivered</h5>
+          <p>Safe reply shown — or a clear warning is displayed.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p>🛡️ <span>GenAI Guardian</span> — Lab Project &copy; 2025 &nbsp;|&nbsp; Built with HTML, CSS &amp; JavaScript</p>
+  </footer>
+
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+
+    // --- 1. Harmful words to detect and block ---
+    var harmfulWords = [
+      "hack", "illegal", "weapon", "violence",
+      "kill", "bomb", "drugs", "steal", "malware", "virus", "attack"
+    ];
+
+    // --- 2. Safe AI responses ---
+    var aiResponses = [
+      "Great question! Ethical AI means building systems that are fair, transparent, and safe for everyone.",
+      "Generative AI learns patterns from data and creates new content like text or images. Used responsibly, it can do amazing things!",
+      "Data privacy means keeping personal information secure and only using it with the user's permission.",
+      "AI in education helps students learn at their own pace and gives teachers smarter tools — very exciting!",
+      "Responsible AI always puts people's wellbeing first. That is the foundation of ethical technology.",
+      "Transparency in AI means users should understand how decisions are made — no hidden magic!",
+      "That's a thoughtful question! I'm here to assist in a safe, helpful, and honest way."
+    ];
+
+    // --- 3. Send message function ---
+    function sendMessage() {
+      var input = document.getElementById("userInput");
+      var text = input.value.trim();
+
+      if (text === "") return; // ignore empty input
+
+      addMessage(text, "msg-user");   // show user bubble
+      document.getElementById("userInput").disabled = true;
+      input.value = "";               // clear input
+
+      // Check for harmful words
+      var blocked = false;
+      for (var i = 0; i < harmfulWords.length; i++) {
+        if (text.toLowerCase().includes(harmfulWords[i])) {
+          blocked = true;
+          break;
+        }
+      }
+
+      if (blocked) {
+        // Show warning after short delay
+        setTimeout(function () {
+          addMessage("⚠️ This request violates ethical guidelines. Please ask something safe and constructive.", "msg-warn");
+        }, 600);
+
+      } else {
+        // Show animated typing dots
+        var typingEl = addTyping();
+
+        getAIResponse(text).then(reply => {
+          typingEl.remove();
+          addMessage(reply, "msg-ai");
+          
+          //ReEnabling Input after ai response in generated
+          document.getElementById("userInput").disabled = false;
+        });
+      }
+    }
+
+    // --- 4. Add a message bubble ---
+    function addMessage(text, cssClass) {
+      var area = document.getElementById("chatMessages");
+      var div = document.createElement("div");
+      div.className = cssClass;
+      div.textContent = text;
+      area.appendChild(div);
+      area.scrollTop = area.scrollHeight; // scroll down
+      return div;
+    }
+
+    // --- 5. Show animated typing dots ---
+    function addTyping() {
+      var area = document.getElementById("chatMessages");
+
+      var div = document.createElement("div");
+      div.className = "typing";
+
+      div.innerHTML = `
+        <div class="typing-wrapper">
+          <span class="typing-text">AI is thinking...</span>
+          <div class="typing-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      `;
+
+      area.appendChild(div);
+      area.scrollTop = area.scrollHeight;
+
+      return div;
+    }
+
+    // --- 6. Quick-try chip function ---
+    function tryPrompt(text) {
+      document.getElementById("userInput").value = text;
+      document.getElementById("chat").scrollIntoView({ behavior: "smooth" });
+      setTimeout(sendMessage, 400);
+    }
+
+    // --- 7. Send with Enter key ---
+    document.getElementById("userInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    // --- AUTH SYSTEM ---
+let isLogin = true;
+
+// Predefined admin account
+if (!localStorage.getItem("users")) {
+  localStorage.setItem("users", JSON.stringify([
+    { username: "admin", password: "1234" }
+  ]));
+}
+
+function openAuth() {
+  document.getElementById("authModal").style.display = "flex";
+}
+
+function closeAuth() {
+  document.getElementById("authModal").style.display = "none";
+}
+
+function toggleAuth() {
+  isLogin = !isLogin;
+
+  document.getElementById("authTitle").textContent = isLogin ? "Login" : "Sign Up";
+  document.querySelector(".auth-box button").textContent = isLogin ? "Login" : "Sign Up";
+
+  document.getElementById("toggleText").innerHTML = isLogin
+    ? `Don't have an account? <span onclick="toggleAuth()">Sign Up</span>`
+    : `Already have an account? <span onclick="toggleAuth()">Login</span>`;
+}
+
+function handleAuth() {
+  let user = document.getElementById("username").value;
+  let pass = document.getElementById("password").value;
+
+  let users = JSON.parse(localStorage.getItem("users"));
+
+  if (isLogin) {
+    let found = users.find(u => u.username === user && u.password === pass);
+
+    if (found) {
+      localStorage.setItem("loggedInUser", user);
+      closeAuth();
+      updateNavbar();
+    } else {
+      document.getElementById("authMsg").textContent = "Invalid credentials!";
+    }
+
+  } else {
+    users.push({ username: user, password: pass });
+    localStorage.setItem("users", JSON.stringify(users));
+    document.getElementById("authMsg").textContent = "Account created! Please login.";
+  }
+}
+
+// Update navbar after login
+function updateNavbar() {
+  let user = localStorage.getItem("loggedInUser");
+  if (user) {
+    document.getElementById("authSection").innerHTML =
+      `<span style="margin-right:10px;">👤 ${user}</span>
+       <button class="nav-btn" onclick="logout()">Logout</button>`;
+  }
+}
+
+function logout() {
+  localStorage.removeItem("loggedInUser");
+  location.reload();
+}
+
+// Run on load
+updateNavbar();
+  async function getAIResponse(userText) {
+  try {
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: userText })
+    });
+
+    const data = await res.json();
+    console.log("FULL RESPONSE:", JSON.stringify(data, null, 2));
+    return data.reply;
+
+  } catch (err) {
+    return "⚠️ Could not connect to AI server.";
+  }
+}
+    
+  </script>
+  <!-- AUTH MODAL -->
+<div id="authModal" class="auth-modal">
+  <div class="auth-box">
+
+    <h2 id="authTitle">Login</h2>
+
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="handleAuth()">Login</button>
+
+    <p id="toggleText">
+      Don't have an account?
+      <span onclick="toggleAuth()">Sign Up</span>
+    </p>
+
+    <p id="authMsg"></p>
+
+    <button class="close-btn" onclick="closeAuth()">✖</button>
+
+  </div>
+</div>
+</body>
+</html>
